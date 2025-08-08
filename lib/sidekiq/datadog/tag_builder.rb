@@ -1,11 +1,11 @@
 module Sidekiq
   module Datadog
     class TagBuilder
-      def initialize(custom_tags = [], skip_tags = [], custom_hostname = nil)
+      def initialize(custom_tags = [], skip_tags = [], custom_hostname = nil, custom_env = nil)
         @tags = Array(custom_tags)
         @skip_tags = Array(skip_tags).map(&:to_s)
 
-        env  = Sidekiq[:environment] || ENV['RACK_ENV']
+        env  = custom_env || ENV['RAILS_ENV'] || ENV['RACK_ENV']
         host = custom_hostname || ENV['INSTRUMENTATION_HOSTNAME'] || Socket.gethostname
         setup_defaults(host: host, env: env)
       end

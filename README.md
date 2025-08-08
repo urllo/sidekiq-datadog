@@ -86,6 +86,7 @@ a custom lambda **and** define it as `skip_tags`
 Both Client and Server middlewares support the same options:
 
  - *hostname* - the hostname used for instrumentation, defaults to system hostname. Can also be set with the `INSTRUMENTATION_HOSTNAME` env var.
+ - *env* - the environment used for instrumentation, defaults to RAILS_ENV or RACK_ENV.
  - *metric_name* - the metric name (prefix) to use, defaults to "sidekiq.job".
  - *tags* - array of custom tags. These can be plain strings or lambda blocks.
  - *skip_tags* - array of tag names that shouldn't be emitted.

@@ -18,6 +18,7 @@ module Sidekiq
         #
         # Options:
         # * <tt>:hostname</tt>    - the hostname used for instrumentation, defaults to system hostname, respects +INSTRUMENTATION_HOSTNAME+ env variable
+        # * <tt>:env</tt>         - the environment used for instrumentation, defaults to RAILS_ENV or RACK_ENV
         # * <tt>:metric_name</tt> - the metric name (prefix) to use, defaults to "sidekiq.job"
         # * <tt>:tags</tt>        - array of custom tags, these can be plain strings or lambda blocks accepting a rack env instance
         # * <tt>:skip_tags</tt>   - array of tag names that shouldn't be emitted
@@ -34,6 +35,7 @@ module Sidekiq
             opts[:tags],
             opts[:skip_tags],
             opts[:hostname],
+            opts[:env],
           )
         end
 

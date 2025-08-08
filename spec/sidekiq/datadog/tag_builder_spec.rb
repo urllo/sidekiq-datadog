@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Sidekiq::Datadog::TagBuilder do
-  subject { described_class.new(custom_tags, skip_tags, custom_hostname) }
+  subject { described_class.new(custom_tags, skip_tags, custom_hostname, custom_env) }
 
   let(:custom_tags) { nil }
   let(:worker) { Mock::Worker.new }
@@ -10,6 +10,7 @@ describe Sidekiq::Datadog::TagBuilder do
   let(:error) { nil }
   let(:skip_tags) { nil }
   let(:custom_hostname) { nil }
+  let(:custom_env) { nil }
 
   it 'builds basic default tags without any parameters' do
     result = subject.build_tags(worker, job, queue, error)
@@ -29,6 +30,15 @@ describe Sidekiq::Datadog::TagBuilder do
     it 'reports the custom hostname' do
       result = subject.build_tags(worker, job, queue, error)
       expect(result).to include('host:myhostname')
+    end
+  end
+
+  context 'with custom env' do
+    let(:custom_env) { 'custom_env' }
+
+    it 'reports the custom env' do
+      result = subject.build_tags(worker, job, queue, error)
+      expect(result).to include('env:custom_env')
     end
   end
 
